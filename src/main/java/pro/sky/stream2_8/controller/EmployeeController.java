@@ -51,14 +51,14 @@ public class EmployeeController {
         return employeeService.getAll();
     }
 
-    @GetMapping("/departmentId")
-    public String printEmployeesByDepartment(@RequestParam("departmentId") int department) {
-        final List<Employee> employeesByDepartment = employeeService.printEmployeesByDepartment(department);
-        final List<String> departments = new ArrayList<>();
-
-        final List<Integer> streamDepartments = employeesByDepartment.stream()
-                .map(Employee::getDepartment)
-                .collect(Collectors.toList());
-        return streamDepartments.toString();
-    }
+//    @GetMapping("/departmentId")
+//    public String printEmployeesByDepartment(@RequestParam("departmentId") int department) {
+//        final List<Employee> employeesByDepartment = employeeService.printEmployeesByDepartment(department);
+//        final List<String> departments = new ArrayList<>();
+//
+//        final List<Integer> streamDepartments = employeesByDepartment.stream()
+//                .map(Employee::getDepartment)
+//                .collect(Collectors.toList());
+//        return streamDepartments.toString();
+//    }
 }

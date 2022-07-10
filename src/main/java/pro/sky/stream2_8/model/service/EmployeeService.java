@@ -58,10 +58,10 @@ public class EmployeeService {
     }
 
 
-    public List<Employee> printEmployeesByDepartment(int department) {
-        return employees.values().stream()
-                .filter(e -> e.getDepartment()==department)
-                .collect(Collectors.toList());
-
-    }
+//    public List<Employee> printEmployeesByDepartment(int department) {
+//        return employees.values().stream()
+//                .filter(e -> e.getDepartment()==department)
+//                .collect(Collectors.toList());
+//
+//    }
 }
