@@ -7,48 +7,61 @@ import pro.sky.stream2_8.exception.EmployeeStorageIsFullException;
 import pro.sky.stream2_8.model.Employee;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
     private static final int LIMIT = 10;
-    private final List<Employee> employees = new ArrayList<>();
+    private final Map<String, Employee> employees = new HashMap<>();
 
-    public Employee addEmployee(String name, String surname) {
-        Employee employee = new Employee(name, surname);
+    private String getKey(String name,
+                          String surname) {
+        return name + surname;
+    }
 
-        if (employees.contains(employee)) {
+    public Employee addEmployee(String name,
+                                String surname,
+                                int department,
+                                double salary) {
+        Employee employee = new Employee(name, surname, department, salary);
+        String key = getKey(name, surname);
+        if (employees.containsKey(key)) {
             throw new EmployeeAlreadyAddedException();
         }
 
         if (employees.size() < LIMIT) {
-            employees.add(employee);
+            employees.put(key, employee);
             return employee;
         }
         throw new EmployeeStorageIsFullException();
     }
 
     public Employee findEmployee(String name, String surname) {
-        Employee employee = new Employee(name, surname);
-
-        if (employees.contains(employee)) {
-            return employee;
+        String key = getKey(name, surname);
+        if (!employees.containsKey(key)) {
+            throw new EmployeeNotFoundException();
         }
-        throw new EmployeeNotFoundException();
+        return employees.get(key);
     }
 
     public Employee removeEmployee(String name, String surname) {
-        Employee employee = new Employee(name, surname);
-
-        if (!employees.contains(employee)) {
+        String key = getKey(name, surname);
+        if (!employees.containsKey(key)) {
             throw new EmployeeNotFoundException();
         }
-        employees.remove(employee);
-        throw new EmployeeNotFoundException();
+        return employees.remove(key);
     }
 
     public List<Employee> getAll() {
-        return new ArrayList<>(employees) ;
+        return new ArrayList<>(employees.values());
+    }
+
+
+    public List<Employee> printEmployeesByDepartment(int department) {
+        return employees.values().stream()
+                .filter(e -> e.getDepartment()==department)
+                .collect(Collectors.toList());
+
     }
 }

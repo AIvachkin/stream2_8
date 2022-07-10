@@ -2,6 +2,8 @@ package pro.sky.stream2_8.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 public class Employee {
     @JsonProperty("firstname")
     private final String name;
@@ -9,19 +11,35 @@ public class Employee {
     @JsonProperty("lastname")
     private final String surname;
 
+    private final double salary;
+    private final int department;
 
-    public Employee(String name, String surname) {
+
+    public Employee(String name,
+                    String surname,
+                    int department,
+                    double salary) {
         this.name = name;
         this.surname = surname;
-
+        this.salary = salary;
+        this.department = department;
     }
 
+    public double getSalary() {
+        return salary;
+    }
+
+    public Integer getDepartment() {
+        return department;
+    }
 
     public String getName() {
+
         return name;
     }
 
     public String getSurname() {
+
         return surname;
     }
 
@@ -40,16 +58,21 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        return 0;
+
+        return Objects.hash(name,
+                surname,
+                department,
+                salary);
     }
 
     @Override
     public String toString() {
         return String.format(
-                "ФИО: %s %s",
-
+                "ФИО: %s %s, отдел: %d, ЗП: %.2f",
                 surname,
-                name
+                name,
+                department,
+                salary
         );
     }
 }
