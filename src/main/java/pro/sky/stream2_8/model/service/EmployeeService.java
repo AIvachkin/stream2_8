@@ -1,5 +1,6 @@
 package pro.sky.stream2_8.model.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.stream2_8.exception.EmployeeAlreadyAddedException;
 import pro.sky.stream2_8.exception.EmployeeNotFoundException;
@@ -24,17 +25,23 @@ public class EmployeeService {
                                 String surname,
                                 int department,
                                 double salary) {
-        Employee employee = new Employee(name, surname, department, salary);
-        String key = getKey(name, surname);
-        if (employees.containsKey(key)) {
+        if (name.isEmpty() || surname.isEmpty() || !StringUtils.isAlpha(name) || !StringUtils.isAlpha(surname)) {
             throw new EmployeeAlreadyAddedException();
-        }
+        } else {
 
-        if (employees.size() < LIMIT) {
-            employees.put(key, employee);
-            return employee;
+            Employee employee = new Employee(StringUtils.capitalize(name), StringUtils.capitalize(surname), department, salary);
+            String key = getKey(StringUtils.capitalize(name), StringUtils.capitalize(surname));
+            if (employees.containsKey(key)) {
+                throw new EmployeeAlreadyAddedException();
+            }
+
+            if (employees.size() < LIMIT) {
+                employees.put(key, employee);
+                return employee;
+            }
+            throw new EmployeeStorageIsFullException();
         }
-        throw new EmployeeStorageIsFullException();
+//        throw new EmployeeAlreadyAddedException();
     }
 
     public Employee findEmployee(String name, String surname) {
