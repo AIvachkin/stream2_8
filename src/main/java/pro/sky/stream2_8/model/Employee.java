@@ -1,6 +1,7 @@
 package pro.sky.stream2_8.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
@@ -19,8 +20,8 @@ public class Employee {
                     String surname,
                     int department,
                     double salary) {
-        this.name = name;
-        this.surname = surname;
+        this.name = StringUtils.capitalize(name.toLowerCase());
+        this.surname = StringUtils.capitalize(surname.toLowerCase());
         this.salary = salary;
         this.department = department;
     }

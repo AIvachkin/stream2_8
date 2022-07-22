@@ -1,6 +1,6 @@
 GET http://localhost:8080/employee/add?firstName=Ivan&lastName=Ivanov&departmentId=1&salary=20000
 ###
-GET http://localhost:8080/employee/add?firstName=Petr&lastName=Petrov&departmentId=2&salary=30000
+GET http://localhost:8080/employee/add?firstName=petr&lastName=petrov&departmentId=2&salary=30000
 ###
 GET http://localhost:8080/employee/add?firstName=andrew&lastName=Andreev&departmentId=2&salary=35000
 ###

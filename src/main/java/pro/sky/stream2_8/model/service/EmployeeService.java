@@ -5,11 +5,14 @@ import org.springframework.stereotype.Service;
 import pro.sky.stream2_8.exception.EmployeeAlreadyAddedException;
 import pro.sky.stream2_8.exception.EmployeeNotFoundException;
 import pro.sky.stream2_8.exception.EmployeeStorageIsFullException;
+import pro.sky.stream2_8.exception.InvalidInputException;
 import pro.sky.stream2_8.model.Employee;
 
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class EmployeeService {
@@ -25,12 +28,14 @@ public class EmployeeService {
                                 String surname,
                                 int department,
                                 double salary) {
-        if (name.isEmpty() || surname.isEmpty() || !StringUtils.isAlpha(name) || !StringUtils.isAlpha(surname)) {
-            throw new EmployeeAlreadyAddedException();
+        if (!validateInput(name, surname)) {
+            throw new InvalidInputException();
         } else {
 
-            Employee employee = new Employee(StringUtils.capitalize(name), StringUtils.capitalize(surname), department, salary);
-            String key = getKey(StringUtils.capitalize(name), StringUtils.capitalize(surname));
+//            Employee employee = new Employee(capitalize(name), capitalize(surname), department, salary);
+//            String key = getKey(capitalize(name), capitalize(surname));
+            Employee employee = new Employee(name, surname, department, salary);
+            String key = getKey(name, surname);
             if (employees.containsKey(key)) {
                 throw new EmployeeAlreadyAddedException();
             }
@@ -45,6 +50,10 @@ public class EmployeeService {
     }
 
     public Employee findEmployee(String name, String surname) {
+        if (!validateInput(name, surname)) {
+            throw new InvalidInputException();
+        }
+
         String key = getKey(name, surname);
         if (!employees.containsKey(key)) {
             throw new EmployeeNotFoundException();
@@ -53,6 +62,10 @@ public class EmployeeService {
     }
 
     public Employee removeEmployee(String name, String surname) {
+        if (!validateInput(name, surname)) {
+            throw new InvalidInputException();
+        }
+
         String key = getKey(name, surname);
         if (!employees.containsKey(key)) {
             throw new EmployeeNotFoundException();
@@ -64,7 +77,11 @@ public class EmployeeService {
         return new ArrayList<>(employees.values());
     }
 
+private boolean validateInput (String name, String surname) {
+        return isAlpha(name)&& isAlpha(surname)&&!name.isEmpty()&&!surname.isEmpty() ;
 
+
+}
 //    public List<Employee> printEmployeesByDepartment(int department) {
 //        return employees.values().stream()
 //                .filter(e -> e.getDepartment()==department)
