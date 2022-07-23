@@ -1,0 +1,27 @@
+GET http://localhost:8080/employee/add?firstName=Ivan&lastName=Ivanov&departmentId=1&salary=20000
+###
+GET http://localhost:8080/employee/add?firstName=petr&lastName=petrov&departmentId=2&salary=30000
+###
+GET http://localhost:8080/employee/add?firstName=andrew&lastName=Andreev&departmentId=2&salary=35000
+###
+GET http://localhost:8080/employee/add?firstName=Semen&lastName=Petrov&departmentId=3&salary=31000
+###
+GET http://localhost:8080/employee/add?firstName=Oleg&lastName=Gavrilov&departmentId=2&salary=30500
+###
+GET http://localhost:8080/departments/all
+###
+GET http://localhost:8080/departments/all?departmentId=5
+###
+GET http://localhost:8080/departments/all?departmentId=2
+###
+GET http://localhost:8080/departments/max-salary?departmentId=5
+###
+GET http://localhost:8080/departments/max-salary?departmentId=2
+###
+GET http://localhost:8080/departments/min-salary?departmentId=2
+###
+GET http://localhost:8080/employee/find?firstName=Semen&lastName=Petrov
+###
+GET http://localhost:8080/employee/remove?firstName=Semen&lastName=Petrov
+###
+GET http://localhost:8080/employee/departmentId?departmentId=2
